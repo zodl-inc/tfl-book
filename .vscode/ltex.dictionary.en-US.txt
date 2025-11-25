@@ -1,0 +1,13 @@
+Zcash
+Proof‑of‑Work
+PoS
+ZEC
+TODO
+Crosslink
+Snap‑and‑Chat
+metavariable
+best‑chain
+nonmalleably
+subprotocols
+iff
+Subprotocols

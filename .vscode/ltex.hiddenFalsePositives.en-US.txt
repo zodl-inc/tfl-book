@@ -1,0 +1,14 @@
+{"rule":"COLLECTIVE_NOUN_VERB_AGREEMENT_VBP","sentence":"some subset of ballots cast"}
+{"rule":"EN_COMPOUNDS","sentence":"block chain"}
+{"rule":"EN_WORD_COHERENCY","sentence":"analyses"}
+{"rule":"THE_SUPERLATIVE","sentence":"deepest first"}
+{"rule":"THE_SUPERLATIVE","sentence":"with highest score"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"tfl-book"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"- "}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qorigbft‑block‑validity should correspond to the strongest property of an origbft‑block that is objectively and feasibly verifiable from the content of the block and its ancestors at the time the block is added to an origbft‑chain.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qin Potential changes to Crosslink.\\E$"}
+{"rule":"EN_UNPAIRED_BRACKETS","sentence":"^\\QThis section describes an important class of potential attacks on approach b) that are difficult to resolve.\\E$"}
+{"rule":"EN_UNPAIRED_BRACKETS","sentence":"^\\QThis motivates using approach a) instead.\\E$"}
+{"rule":"EN_UNPAIRED_BRACKETS","sentence":"^\\QNote that we have still glossed over precisely how consensus rules would change to enforce a).\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qensure that readers can better notice changes or updates between readings or in discussions with others;\nsignify that the authors have converged after a period of editing onto a coherent integrated result;\nsignify approximate maturity of the design, based on the version number; and\nserve as a natural milestone for announcements on design updates.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qexcept that \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q cannot be \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, because \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is newly produced.\\E$"}
