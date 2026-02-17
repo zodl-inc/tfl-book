@@ -2,11 +2,6 @@
 
 This page documents suggestions that have not had the same attention to security analysis as the [Crosslink 2 construction](./construction.md). Some of them are broken. Some of them also increase the complexity of the protocol (while some simplify it or have a mixed effect on complexity), and so we need to consider the security/complexity trade‑off of each suggestion before we could include it.
 
-```admonish warning "This page is out-of-date"
-
-This page has not yet been updated for the changes from Crosslink 1 to Crosslink 2.
-```
-
 ## Attempts to improve safety or to simplify the protocol
 
 ### [Recommended] Recording more info about the bft‑chain in bc‑blocks
@@ -24,6 +19,11 @@ We could also expose attempts to double‑vote.
 Note that double‑proposal and double‑voting could be a sign that a proposer or validator’s private key is compromised, rather than that it belongs to the adversary per se. However, the security analysis must treat such a proposer/validator as non‑honest in any case.
 
 ### Changing the Increasing Score rule to require the score of the tip (rather than the score of the snapshot) to increase
+
+```admonish warning "This section is out-of-date"
+
+This section has not yet been updated for the changes from Crosslink 1 to Crosslink 2.
+```
 
 The current [**Increasing Score rule**](./construction.md#%CE%A0bft-proposal-and-block-validity) concerns the score of the snapshot:
 
@@ -91,6 +91,11 @@ $$
 
 Since $\Origin_{\bft}\dot\bcisforked = \false$, the recursion will terminate.
 
+```admonish warning "This section is out-of-date"
+
+The remainder of this section has not yet been updated for the changes from Crosslink 1 to Crosslink 2.
+```
+
 Note that there is an interaction between the **Increasing Snapshot Score rule** and this change: the **Increasing Snapshot Score rule** should arguably use $\mathsf{baseline\_snapshot}$ instead of $\snapshot$. The **Increasing Tip Score rule**, on the other hand, works fine as‑is, and so it makes sense to use both of these changes together. The combination of both changes also fixes the con discussed above for the **Increasing Tip Score rule**; it ensures that the score of the snapshot must increase.
 
 Pros:
@@ -142,6 +147,11 @@ Enforcing this is relatively straightforward if the evidence is a SNARK. It can 
 
 ### Strengthening the Increasing Tip Score rule
 
+```admonish warning "This section is out-of-date"
+
+This section has not yet been updated for the changes from Crosslink 1 to Crosslink 2.
+```
+
 Assume that votes include competing chain information as discussed above. We can assume that an honest proposer has read all of this information from its parent bft‑block. Therefore, we can require the tip score of its proposal to have at least the score of the best tip implied by that information:
 
 Let $\besttip(B)$ be the tip mentioned in <span style="white-space: nowrap">bft‑block $B$</span> with the highest score. <span style="white-space: nowrap">A bft‑block $B$</span> “mentions” the two best tips defined in the previous section.
@@ -156,7 +166,7 @@ Note that this rule is really quite constraining for a potential adversary, espe
 
 The Crosslink 1 design imposes a finalization latency of at least <span style="white-space: nowrap">$2\sigma + 1$ block times.</span> Intuitively, this is because in $$
 \fin(H) := [\snapshot(B) \text{ for } B \preceq_{\bft} \bftlastfinal(H \trunc_{\bc}^\sigma\dot\contextbft)],
-$$ $\snapshot(\bftlastfinal(H \trunc_{\bc}^\sigma\dot\contextbft))$ is at least <span style="white-space: nowrap">$\sigma+1$ blocks</span> back <span style="white-space: nowrap">from $H \trunc_{\bc}^\sigma$</span> (as argued in [Questions about Crosslink 1](./questions.md#Why-don%E2%80%99t-we-have-a-bc-block-validity-rule-snapshotfinal-bftH-%E2%AA%AFbc-H-)), and therefore <span style="white-space: nowrap">$2\sigma+1$ blocks</span> back <span style="white-space: nowrap">from $H$.</span> So the total finalization latency is <span style="white-space: nowrap">$\sigma$ block times + BFT overhead + $(\sigma + 1)$ block times + snapshot overhead.</span>
+$$ $\snapshot(\bftlastfinal(H \trunc_{\bc}^\sigma\dot\contextbft))$ is at least <span style="white-space: nowrap">$\sigma+1$ blocks</span> back <span style="white-space: nowrap">from $H \trunc_{\bc}^\sigma$</span> (as argued in [Questions about Crosslink](./questions.md#Why-don%E2%80%99t-we-have-a-bc-block-validity-rule-snapshotfinal-bftH-%E2%AA%AFbc-H-)), and therefore <span style="white-space: nowrap">$2\sigma+1$ blocks</span> back <span style="white-space: nowrap">from $H$.</span> So the total finalization latency is <span style="white-space: nowrap">$\sigma$ block times + BFT overhead + $(\sigma + 1)$ block times + snapshot overhead.</span>
 
 However, the snapshot headers contain information about the proposer’s bc‑best‑chain.
 
@@ -170,6 +180,11 @@ $$? After all, we know that $\lastcommonancestor(H \trunc_{\bc}^\sigma,\, \tip(\
 Oh, this won’t work. The problem is that we want safety of $\LOG_{\fin}$ not to depend on safety of $\Pi_{\bc}$. So we cannot assume (for this purpose) that nodes see the <span style="white-space: nowrap">same $H \trunc_{\bc}^\sigma$.</span>
 
 ### Replacing $\LOG_{\bda}}$ with $\LOG_{\opt}}$
+
+```admonish warning "This subsection is out-of-date"
+
+This subsection is probably no longer relevant in Crosslink 2.
+```
 
 What if we instead take this to be the definition of $\LOG_{\opt}}$, replacing $\LOG_{\bda}}$ ("opt" meaning optimistic)?
 
@@ -234,7 +249,12 @@ H \trunc_{\bc}^\sigma, &\text{if } \snapshotlf{H \trunc_{\bc}^\sigma} \preceq_{\
 
 ## What about making the bc‑block‑producer the bft‑proposer?
 
-The answer given for this question at [The Crosslink 2 Construction](./construction.md#%CE%A0bft-proposal-and-block-validity) is:
+```admonish warning "This section is out-of-date"
+
+This section has not yet been updated for the changes from Crosslink 1 to Crosslink 2.
+```
+
+The answer given for this question at [The Crosslink 1 Construction](./construction.md#%CE%A0bft-proposal-and-block-validity) is:
 > If this were enforced, it could be an alternative way of ensuring that every bft‑proposal snapshots a new bc‑block with a higher score than previous snapshots, potentially making the **Increasing Score rule** redundant. However, it would require merging bc‑block‑producers and bft‑proposers, which could have concerning knock‑on effects (such as concentrating security into fewer participants).
 
 This may have been too hasty. It is not clear that merging bc‑block‑producers and bft‑proposers actually does “concentrate security into fewer participants” in a way that can have any harmful effect.

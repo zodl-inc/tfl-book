@@ -346,7 +346,7 @@ It is not necessary to involve probability in arguments of this form. Any probab
 
 In particular, if a statement of this form holds, and ⟨safety properties⟩ are violated with probability <span style="white-space: nowrap">at most $p$</span> under certain conditions, then it immediately follows that under those conditions ⟨undesirable thing⟩ happens with probability <span style="white-space: nowrap">at most $p$.</span> Furthermore, ⟨undesirable thing⟩ can only happen *after* ⟨safety properties⟩ have been violated, because the execution up to that point has been an execution in which ⟨safety properties⟩ are *not* violated.
 
-With few exceptions, involving probability in a security argument is best done only to account for nondeterministic choices in the protocol itself. This is opinionated advice, but a lot of security proofs would likely be simpler if inherently probabilistic arguments were more distinctly separated from unconditional ones.
+With few exceptions, involving probability in a security argument is best done only to account for nondeterministic choices in the protocol itself. A lot of security proofs would be simpler if inherently probabilistic arguments were more distinctly separated from unconditional ones.
 
 In the case of the Prefix Agreement property, an alternative approach would be to prove that Prefix Agreement holds with some probability given Prefix Consistency and some other chain properties. This is what [[NTT2020]](https://eprint.iacr.org/2020/1091.pdf) does in its <span style="white-space: nowrap">Theorem 2,</span> which essentially says that under certain conditions Prefix Agreement holds except with <span style="white-space: nowrap">probability $e^{-\Omega(\sqrt{\sigma})}$.</span>
 
@@ -420,7 +420,8 @@ In practice a node's view of the finalized chain, <span style="white-space: nowr
 2. Each bft‑proposal has, in addition to origbft‑proposal fields, a $\headersbc$ field containing a sequence of exactly <span style="white-space: nowrap">$\sigma$ bc‑headers</span> (zero‑indexed, deepest first).
 3. Each non‑genesis bft‑block has, in addition to origbft‑block fields, a $\headersbc$ field containing a sequence of exactly <span style="white-space: nowrap">$\sigma$ bc‑headers</span> (zero-indexed, deepest first). The genesis bft‑block has <span style="white-space: nowrap">$\headersbc = \null$.</span>
 
-For a bft‑block or bft‑proposal $B$, define $$
+For a bft‑block or bft‑proposal $B$, define
+$$
 \begin{array}{rl}
 \hphantom{\LF(H)}\snapshot(B) &\!\!\!\!:= \begin{cases}
   \Origin_{\bc},&\if B\dot\headersbc = \null \\
@@ -428,7 +429,9 @@ For a bft‑block or bft‑proposal $B$, define $$
 \end{cases}
 \end{array}
 $$
-For a bc‑block $H$, define $$
+
+For a bc‑block $H$, define
+$$
 \begin{array}{rl}
 \hphantom{\snapshot(B)}\LF(H) &\!\!\!\!:= \bftlastfinal(H\dot\contextbft) \\
                 \candidate(H) &\!\!\!\!:= \lastcommonancestor(\snapshotlf{H}, H \trunc_{\bc}^\sigma)
@@ -519,7 +522,8 @@ $\TODO$ Choose between these options based on what works well for the security p
 
 ### Locally bounded‑available chain
 
-Define the locally bounded‑available chain on node $i$ for bc‑confirmation‑depth $\mu$, as $$
+Define the locally bounded‑available chain on node $i$ for bc‑confirmation‑depth $\mu$, as
+$$
 (\localba_\mu)_i^t = \begin{cases}
   \ch_i^t \trunc_{\bc}^\mu, &\if \localfin_i^t \preceq \ch_i^t \trunc_{\bc}^\mu \\
   \localfin_i^t, &\otherwise
@@ -688,9 +692,11 @@ A bc‑block $H$ is bc‑block‑valid iff all of the following hold:
 * <span id="valid-context-rule"></span>**Valid context rule:** $H\dot\contextbft$ is bft‑block‑valid.
 * <span id="extension-rule"></span>**Extension rule:** $\LF(H \trunc_{\bc}^1) \preceq_{\bft} \LF(H)$.
 * <span id="last-final-snapshot-rule"></span>**Last Final Snapshot rule:** $\snapshotlf{H} \preceq_{\bc} H$.
-* <span id="finality-depth-rule"></span>**Finality depth rule:** Define: $$
-\finalitydepth(H) := \height(H) - \height(\snapshotlf{H})
-$$ Then either $\finalitydepth(H) \leq L$ or <span style="white-space: nowrap">$\isstalledblock(H)$.</span>
+* <span id="finality-depth-rule"></span>**Finality depth rule:** Define:
+  $$
+  \finalitydepth(H) := \height(H) - \height(\snapshotlf{H})
+  $$
+  Then either $\finalitydepth(H) \leq L$ or <span style="white-space: nowrap">$\isstalledblock(H)$.</span>
 
 ```admonish info collapsible=true title="Explain the definition of finality‑depth."
 The finality depth must be objectively defined, since it is used in a consensus rule. Therefore it should measure the height of $H$ relative to $\snapshotlf{H}$, which is an objectively defined function of $H$, rather than relative to $\localfin_i^t$. (These will only differ for $H = \ch_i^t$ when node $i$ has just reorged, and only then in corner cases.)
@@ -706,9 +712,11 @@ The consensus rule changes above are all non-contextual. Modulo these changes, c
 
 An honest producer of a <span style="white-space: nowrap">bc‑block $H$</span> must follow the consensus rules under [$\Pi_{\bc}$ block validity](#Πbc-block-validity) above. In particular, it must produce a stalled block if required to do so by the [**Finality depth rule**](#finality-depth-rule).
 
-To <span style="white-space: nowrap">choose $H\dot\contextbft$,</span> the producer considers a subset of the tips of bft‑valid‑chains in its view: $$
+To <span style="white-space: nowrap">choose $H\dot\contextbft$,</span> the producer considers a subset of the tips of bft‑valid‑chains in its view:
+$$
 \{ T : T \text{ is bft‑block‑valid and } \LF(H \trunc_{\bc}^1) \preceq_{\bft} \bftlastfinal(T) \}
-$$ It chooses one of the longest of these chains, $C$, breaking ties by maximizing <span style="white-space: nowrap">$\score(\snapshot(\bftlastfinal(C)))$,</span> and if there is still a tie then by taking $C$ with the smallest hash.
+$$
+It chooses one of the longest of these chains, $C$, breaking ties by maximizing <span style="white-space: nowrap">$\score(\snapshot(\bftlastfinal(C)))$,</span> and if there is still a tie then by taking $C$ with the smallest hash.
 
 The honest block producer then sets <span style="white-space: nowrap">$H\dot\contextbft$ to $C$.</span>
 
